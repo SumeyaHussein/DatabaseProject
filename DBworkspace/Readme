@@ -1,0 +1,11 @@
+Initial Introduction to using the Kaggle database 
+Accessing database: https://www.kaggle.com/datasets/nelgiriyewithana/top-spotify-songs-2023/data
+How to use the Kaggle database:
+1.go to the kaggle database link
+2.add a new notebook
+3.sign in (if not)
+4.code some things
+           a. import pandas as pd
+           b. path ="/kaggle/input/top-spotify-songs-2023/spotify-2023.csv"
+           c. file = pd.read_csv(path, encoding='ISO-8859-1')
+           d. print(file.head) --> or anything to run and see everything is imported and accessed correctly
