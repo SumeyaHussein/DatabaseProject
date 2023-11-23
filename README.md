@@ -1,4 +1,4 @@
-Connecting vscode to git
+# Connecting vscode to git
 1. Go to the terminal and type the following: git clone “HTTP URL”
 2. git config --global user.name "Your Name"
 3. git config --global user.email "your.email@example.com"
