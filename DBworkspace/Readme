@@ -9,3 +9,49 @@ How to use the Kaggle database:
            b. path ="/kaggle/input/top-spotify-songs-2023/spotify-2023.csv"
            c. file = pd.read_csv(path, encoding='ISO-8859-1')
            d. print(file.head) --> or anything to run and see everything is imported and accessed correctly
+
+Notes on creating tables: 
+CREATE TABLE Artist (
+    artist_name VARCHAR(255) PRIMARY KEY,
+    track_name VARCHAR(255)
+    -- Other relevant artist information columns
+);
+CREATE TABLE Artist_Track (
+    artist_name VARCHAR(255),
+    track_name VARCHAR(255),
+    PRIMARY KEY (artist_name, track_name),
+    FOREIGN KEY (artist_name) REFERENCES Artist(artist_name),
+    FOREIGN KEY (track_name) REFERENCES Song_Attributes(track_name)
+);
+CREATE TABLE Song_Attributes (
+    track_name VARCHAR(255) PRIMARY KEY,
+    danceability FLOAT,
+    valence FLOAT,
+    energy FLOAT,
+    acousticness FLOAT,
+    instrumentalness FLOAT,
+    liveness FLOAT,
+    speechiness FLOAT
+);
+Song_attributes Replace "Genre"
+CREATE TABLE Song (
+    track_name VARCHAR(255) PRIMARY KEY,
+    artist_name VARCHAR(255),
+    released_year INT,
+    released_month INT,
+    released_day INT,
+    streams INT,
+    in_spotify_playlists INT,
+    in_apple_playlists INT,
+    -- Other song-related columns
+    FOREIGN KEY (artist_name) REFERENCES Artist(artist_name)
+    -- No genre_id column if using genre name directly in the Song table
+);
+CREATE TABLE Artist_Track (
+    artist_name VARCHAR(255),
+    track_name VARCHAR(255),
+    PRIMARY KEY (artist_name, track_name),
+    FOREIGN KEY (artist_name) REFERENCES Artist(artist_name),
+    FOREIGN KEY (track_name) REFERENCES Song_Attributes(track_name)
+);
+
