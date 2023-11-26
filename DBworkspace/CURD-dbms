@@ -1,8 +1,11 @@
 C
 add songs
+create playlist? add playlists 
+//extra: create song or podcast
 
 U
 update the streams of songs
+update preference? to make new playlist 
 
 R
 read song from certain artists
