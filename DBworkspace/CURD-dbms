@@ -6,6 +6,7 @@ create playlist? add playlists
 U
 update the streams of songs
 update preference? to make new playlist 
+// extra: update liked songs 
 
 R
 read song from certain artists
