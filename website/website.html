@@ -64,7 +64,9 @@
         }
 
         .enter-button {
-            margin-top: 20px;
+            position: absolute;
+            top: 155px;
+            left: 750px;
         }
     </style>
 </head>
@@ -80,30 +82,39 @@
     <!-- Add more pages here if needed -->
 </nav>
 
-<section>    
-    <div class="dropdown">
-        <a href="#">Do you need recommendations?</a>
-        <div class="dropdown-content">
-            <label><input type="checkbox" name="recommendation" value="danceability"> Danceability</label>
-            <label><input type="checkbox" name="recommendation" value="artist"> Artist Name</label>
-            <label><input type="checkbox" name="recommendation" value="streams"> Streams</label>
-            <label><input type="checkbox" name="recommendation" value="top-songs"> Top Songs</label>
-            <label><input type="checkbox" name="recommendation" value="released-year"> Released Year</label>
-            <label><input type="checkbox" name="recommendation" value="energy"> Energy</label>
+<section> 
+    <div class="dropdown" id="recommendationDropdown">
+        <button onclick="toggleDropdown()"> Playlist recommendations?</button>
+        <div class="dropdown-content" id="optionsDropdown">
+            <p>Select your options:</p>
+            <div>
+                <label><input type="checkbox" name="recommendation" value="danceability"> Danceability</label>
+                <label><input type="checkbox" name="recommendation" value="artist"> Artist Name</label>
+                <label><input type="checkbox" name="recommendation" value="streams"> Streams</label>
+            </div>
+            <div>
+                <label><input type="checkbox" name="recommendation" value="top-songs"> Top Songs</label>
+                <label><input type="checkbox" name="recommendation" value="released-year"> Released Year</label>
+                <label><input type="checkbox" name="recommendation" value="energy"> Energy</label>
+            </div>   
         </div>
     </div>
     <!-- End of dropdown -->
     <button class="enter-button" onclick="submitOptions()">Enter</button>
     
-     <!-- Content of your home page goes here -->
+     <!-- Content of home page goes here -->
      <h2>Welcome to SpotifyRecommends!</h2>
      <p>This is the home page content.</p>
 
 </section>
 
 <script>
+    function toggleDropdown() {
+        var dropdownContent = document.getElementById("optionsDropdown");
+        dropdownContent.style.display = (dropdownContent.style.display === "block") ? "none" : "block";
+    }
+
     function submitOptions() {
-            // Add your logic here to process the selected options
          alert("Options submitted!");
     }
  </script>
