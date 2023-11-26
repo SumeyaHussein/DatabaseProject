@@ -46,7 +46,7 @@
         .dropdown {
             position: absolute;
             top: 150px;
-            left: 250px;
+            left: 300px;
             display: inline-block;
         }
 
@@ -65,8 +65,25 @@
 
         .enter-button {
             position: absolute;
-            top: 155px;
-            left: 750px;
+            top: 150px;
+            left: 520px;
+            background-color: black;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+        .dropdown button {
+        
+            background-color: black;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .enter-button:hover, .dropdown button:hover {
+            background-color: #333;
         }
     </style>
 </head>
@@ -79,6 +96,7 @@
 <nav>
     <a href="index.html">Home</a>
     <a href="record.html">Record</a>
+    <a href="likedsongs.html">Liked songs</a>
     <!-- Add more pages here if needed -->
 </nav>
 
@@ -102,7 +120,7 @@
     <!-- End of dropdown -->
     <button class="enter-button" onclick="submitOptions()">Enter</button>
     
-     <!-- Content of home page goes here -->
+     <!-- Content of  home page goes here -->
      <h2>Welcome to SpotifyRecommends!</h2>
      <p>This is the home page content.</p>
 
