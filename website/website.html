@@ -63,17 +63,17 @@
             display: block;
         }
 
-        .enter-button {
+        .enter-button  {
             position: absolute;
             top: 150px;
             left: 520px;
-            background-color: black;
+            background-color: rgb(10, 114, 31);
             color: white;
             padding: 10px 20px;
             border: none;
             cursor: pointer;
         }
-        .dropdown button {
+        .dropdown button  {
         
             background-color: black;
             color: white;
@@ -81,9 +81,22 @@
             border: none;
             cursor: pointer;
         }
+         .similar-songs-button{
+            position: absolute;
+            top: 190px;
+            left: 280px;
+            background-color: black;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+         }
 
-        .enter-button:hover, .dropdown button:hover {
-            background-color: #333;
+        .enter-button:hover, .dropdown button:hover, .similar-songs-button  {
+            background-color: #000000;
+        }
+        .similar-songs-button {
+            margin-left: 20px;
         }
     </style>
 </head>
@@ -120,7 +133,9 @@
     <!-- End of dropdown -->
     <button class="enter-button" onclick="submitOptions()">Enter</button>
     
-     <!-- Content of  home page goes here -->
+    <button class="similar-songs-button" onclick="showSimilarSongs()">Similar Songs</button>
+
+     <!-- Content of your home page goes here -->
      <h2>Welcome to SpotifyRecommends!</h2>
      <p>This is the home page content.</p>
 
@@ -133,7 +148,13 @@
     }
 
     function submitOptions() {
+            // Add your logic here to process the selected options
          alert("Options submitted!");
+
+    function showSimilarSongs() {
+        // Add your logic here to handle the "Similar Songs" button click
+        alert("Displaying Similar Songs!");
+    }     
     }
  </script>
     
