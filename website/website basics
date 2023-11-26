@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpotifyRecommends</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #1DB954;
+            padding: 10px;
+            text-align: center;
+            color: white;
+        }
+
+        nav {
+            float: left;
+            width: 20%;
+            height: 100vh;
+            background-color: #333;
+            padding-top: 20px;
+        }
+nav a {
+            display: block;
+            color: white;
+            padding: 10px;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        nav a:hover {
+            background-color: #555;
+        }
+
+        section {
+            float: left;
+            width: 80%;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>SpotifyRecommends</h1>
+</header>
+
+<nav>
+    <a href="index.html">Home</a>
+    <a href="record.html">Record</a>
+</nav>
+
+<section>
+    <h2>Welcome to SpotifyRecommends!</h2>
+    <p>This is the home page content.</p>
+</section>
+
+</body>
+</html>
