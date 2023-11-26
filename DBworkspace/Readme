@@ -14,7 +14,7 @@ Notes on creating tables:
 CREATE TABLE Artist (
     artist_name VARCHAR(255) PRIMARY KEY,
     track_name VARCHAR(255)
-    -- Other relevant artist information columns
+    -- Other relevant artist information columns (artist top songs)
 );
 CREATE TABLE Artist_Track (
     artist_name VARCHAR(255),
@@ -55,3 +55,11 @@ CREATE TABLE Artist_Track (
     FOREIGN KEY (track_name) REFERENCES Song_Attributes(track_name)
 );
 
+
+
+
+// ignore these for now 
+// (1) create table song with song_id(pk), title artist(fk), genre (fk), bpm,mode,dancability percentage, key songs, energy, acousticness,instramenalness,liveness,speechiness
+ (2) create table artist with artist_id (pk), name , top songs 
+(3) create table user with user (pk), name , email , address
+(4) 
