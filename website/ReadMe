@@ -1,5 +1,21 @@
+if not done yet set up the database refer here: 
+1. create a database by clicking on the cylinder image
+  a. suggest to call is spotify-2023
+2. then add a table to that database via table data import wizard
+  a. requires you to add the path to the csv file
+  b. call the table as spotify2023 
+3. once you add the table run queries located in DBWorkspace/creatingTables.py
+
+Now move on to interacting to the web
 to run the flask api and interact w the websites
 paste this onto your browser: http://127.0.0.1:5000/
 1. have files testWeb.html, create_playlist.html, and welcomepage.html under a folder called templates
 2. have the file for backend.py in the same directory as the websites above but NOT in the templates folder
+  a. change this part of the backend.py to reflect your environment
+  db = mysql.connector.connect(
+    host = "localhost",
+    user = "root",
+    passwd="root",
+    database= "spotify-2023"
+    )
 
