@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SQL Query Interface</title>
+</head>
+<body>
+    <h1>SQL Query Interface</h1>
+    
+    <textarea id="query" rows="4" cols="50" placeholder="Enter SQL query"></textarea><br><br>
+    <button onclick="executeQuery()">Run Query</button><br><br>
+    
+    <div id="result"></div>
+
+    <script>
+        function executeQuery() {
+            const query = document.getElementById('query').value;
+
+            fetch('http://127.0.0.1:5000/query', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ query: query }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                displayResult(data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        function displayResult(data) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = '';
+
+            if (data.error) {
+                resultDiv.textContent = `Error: ${data.error}`;
+            } else {
+                if (data.result === 'No data found') {
+                    resultDiv.textContent = 'No data found';
+                } else {
+                    const resultArray = data.result;
+                    const table = document.createElement('table');
+                    const headerRow = table.createTHead().insertRow();
+                    Object.keys(resultArray[0]).forEach(key => {
+                        const th = document.createElement('th');
+                        th.textContent = key;
+                        headerRow.appendChild(th);
+                    });
+                    resultArray.forEach(row => {
+                        const tr = table.insertRow();
+                        Object.values(row).forEach(value => {
+                            const td = tr.insertCell();
+                            td.textContent = value;
+                        });
+                    });
+                    resultDiv.appendChild(table);
+                }
+            }
+        }
+    </script>
+</body>
+</html>
