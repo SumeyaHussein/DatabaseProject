@@ -19,3 +19,6 @@ paste this onto your browser: http://127.0.0.1:5000/
     database= "spotify-2023"
     )
 
+
+
+running: run website.html to see the website, it will show the contents in likedsongs.html and record.html as these are different pages from the website.html page
