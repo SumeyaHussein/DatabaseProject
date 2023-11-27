@@ -121,7 +121,11 @@
         top: 150px;
         left: 360px; /* Adjust the left position as needed */
         display: inline-block;
-}
+       }
+
+
+
+
 
     </style>
 </head>
@@ -203,62 +207,26 @@
     }
 
     function toggleArtistDropdown() {
-    var artistDropdown = document.getElementById("artistOptions");
-    artistDropdown.style.display = (artistDropdown.style.display === "block") ? "none" : "block";
+        var artistDropdown = document.getElementById("artistOptions");
+        artistDropdown.style.display = (artistDropdown.style.display === "block") ? "none" : "block";
     }
-
 
     function submitOptions() {
-    var selectedOption = document.querySelector('input[name="recommendation"]:checked').value;
-    var optionValue;
+        var danceabilityOption = getOptionValue("danceability");
+        var genreOption = getOptionValue("genre");
+        var artistOption = getOptionValue("artist");
+        var streamsOption = getOptionValue("streams");
 
-    function submitOptions() {
-    var selectedOption = document.querySelector('input[name="recommendation"]:checked').value;
-    var optionValue;
-
-    switch (selectedOption) {
-        case "danceability":
-            optionValue = document.getElementById("danceability").value;
-            break;
-        case "genre":
-            optionValue = document.getElementById("genre").value;
-            break;
-        case "artist":
-            optionValue = document.getElementById("artist").value;
-            break;
-        case "streams":
-            // You can add logic here to handle the streams option
-            optionValue = "Streams Option Selected";
-            break;
-        default:
-            optionValue = "Invalid Option";
+        alert("Danceability: " + danceabilityOption +
+              "\nGenre: " + genreOption +
+              "\nArtist: " + artistOption +
+              "\nStreams: " + streamsOption);
     }
 
-    alert("Selected Option: " + selectedOption + "\nOption Value: " + optionValue);
-}
-
-
-    switch (selectedOption) {
-        case "danceability":
-            optionValue = document.getElementById("danceability").value;
-            break;
-        case "genre":
-            optionValue = document.getElementById("genre").value;
-            break;
-        case "artist":
-            optionValue = document.getElementById("artist").value;
-            break;
-        case "streams":
-            // You can add logic here to handle the streams option
-            optionValue = "Streams Option Selected";
-            break;
-        default:
-            optionValue = "Invalid Option";
+    function getOptionValue(optionId) {
+        var optionElement = document.getElementById(optionId);
+        return optionElement ? optionElement.value : "";
     }
-
-    alert("Selected Option: " + selectedOption + "\nOption Value: " + optionValue);
-}
-
 
     function showSimilarSongs() {
         // Add your logic here to handle the "Similar Songs" button click
@@ -276,27 +244,26 @@
         if (dropdownContent.style.display === "block") {
             danceabilityOptions.style.display = "none";
             genreOptions.style.display = "none";
-            artistOptions.style
-            display = "none";
+            artistOptions.style.display = "none";
 
-var selectedOption = document.querySelector('input[name="recommendation"]:checked').value;
+            var selectedOption = document.querySelector('input[name="recommendation"]:checked').value;
 
-switch (selectedOption) {
-    case "danceability":
-        danceabilityOptions.style.display = "block";
-        break;
-    case "genre":
-        genreOptions.style.display = "block";
-        break;
-    case "artist":
-        artistOptions.style.display = "block";
-        break;
-    default:
-        break;
-}
-}
-});
+            switch (selectedOption) {
+                case "danceability":
+                    danceabilityOptions.style.display = "block";
+                    break;
+                case "genre":
+                    genreOptions.style.display = "block";
+                    break;
+                case "artist":
+                    artistOptions.style.display = "block";
+                    break;
+                default:
+                    break;
+            }
+        }
+    });
 </script>
 
 </body>
-</html>
+</html>         
