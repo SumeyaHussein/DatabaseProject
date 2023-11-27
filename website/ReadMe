@@ -1,0 +1,5 @@
+to run the flask api and interact w the websites
+paste this onto your browser: http://127.0.0.1:5000/
+1. have files testWeb.html, create_playlist.html, and welcomepage.html under a folder called templates
+2. have the file for backend.py in the same directory as the websites above but NOT in the templates folder
+
