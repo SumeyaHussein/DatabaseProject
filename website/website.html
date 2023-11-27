@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SpotifyRecommends</title>
+    <title>Create a Playlist</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -43,6 +43,7 @@
             width: 80%;
             padding: 20px;
         }
+
         .dropdown {
             position: absolute;
             top: 150px;
@@ -63,7 +64,7 @@
             display: block;
         }
 
-        .enter-button  {
+        .enter-button {
             position: absolute;
             top: 150px;
             left: 520px;
@@ -73,15 +74,16 @@
             border: none;
             cursor: pointer;
         }
-        .dropdown button  {
-        
+
+        .dropdown button, .similar-songs-button {
             background-color: black;
             color: white;
             padding: 10px 20px;
             border: none;
             cursor: pointer;
         }
-         .similar-songs-button{
+
+        .similar-songs-button {
             position: absolute;
             top: 190px;
             left: 280px;
@@ -90,20 +92,43 @@
             padding: 10px 20px;
             border: none;
             cursor: pointer;
-         }
-
-        .enter-button:hover, .dropdown button:hover, .similar-songs-button  {
-            background-color: #000000;
-        }
-        .similar-songs-button {
             margin-left: 20px;
         }
+
+        .enter-button:hover, .dropdown button:hover, .similar-songs-button:hover {
+            background-color: #000000;
+        }
+
+        .input-options {
+            margin-top: 10px;
+        }
+
+        .input-options label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        .input-options input, .input-options select {
+            margin-top: 5px;
+        }
+
+        .input-options input[type="radio"] {
+            margin-top: 5px;
+        }
+
+        #artistDropdown {
+        position: absolute;
+        top: 150px;
+        left: 360px; /* Adjust the left position as needed */
+        display: inline-block;
+}
+
     </style>
 </head>
 <body>
 
 <header>
-    <h1>SpotifyRecommends</h1>
+    <h1>RandomPlaylist</h1>
 </header>
 
 <nav>
@@ -113,31 +138,61 @@
     <!-- Add more pages here if needed -->
 </nav>
 
-<section> 
+<section>
+    <!-- Dropdown for playlist recommendations -->
     <div class="dropdown" id="recommendationDropdown">
-        <button onclick="toggleDropdown()"> Playlist recommendations?</button>
+        <button onclick="toggleDropdown()">Playlist recommendations?</button>
         <div class="dropdown-content" id="optionsDropdown">
-            <p>Select your options:</p>
-            <div>
-                <label><input type="checkbox" name="recommendation" value="danceability"> Danceability</label>
-                <label><input type="checkbox" name="recommendation" value="artist"> Artist Name</label>
-                <label><input type="checkbox" name="recommendation" value="streams"> Streams</label>
+            <div class="input-options" id="danceabilityOptions">
+                <label for="danceability">Danceability (1-100):</label>
+                <input type="number" id="danceability" min="1" max="100">
             </div>
-            <div>
-                <label><input type="checkbox" name="recommendation" value="top-songs"> Top Songs</label>
-                <label><input type="checkbox" name="recommendation" value="released-year"> Released Year</label>
-                <label><input type="checkbox" name="recommendation" value="energy"> Energy</label>
+            <div class="input-options" id="genreOptions" style="display:none;">
+                <label for="genre">Genre:</label>
+                <select id="genre">
+                    <option value="pop">Pop</option>
+                    <option value="country">Country</option>
+                    <option value="rnb">R&B</option>
+                </select>
+            </div>
+            <div class="input-options" id="artistOptions" style="display:none;">
+                <label for="artist">Artist Name:</label>
+                <select id="artist">
+                    <option value="drake">Drake</option>
+                    <option value="miley">Miley</option>
+                </select>
             </div>   
+            
+    
+            
+            <div class="input-options" id="recommendationTypeOptions">
+                <label>Select Recommendation Type:</label>
+                <input type="radio" id="danceabilityRadio" name="recommendation" value="danceability" checked>
+                <label for="danceabilityRadio">Danceability</label>
+                <input type="radio" id="genreRadio" name="recommendation" value="genre">
+                <label for="genreRadio">Genre</label>
+                <input type="radio" id="artistRadio" name="recommendation" value="artist">
+                <label for="artistRadio">Artist</label>
+                <input type="radio" id="streamsRadio" name="recommendation" value="streams">
+                <label for="streamsRadio">Streams</label>
+            </div>
+            
+    
+
+           
         </div>
     </div>
     <!-- End of dropdown -->
+
+    <!-- Enter button for playlist recommendations -->
     <button class="enter-button" onclick="submitOptions()">Enter</button>
-    
+
+    <!-- Similar Songs button -->
     <button class="similar-songs-button" onclick="showSimilarSongs()">Similar Songs</button>
 
-     <!-- Content of your home page goes here -->
-     <h2>Welcome to SpotifyRecommends!</h2>
-     <p>This is the home page content.</p>
+    <!-- Content of your home page goes here -->
+    <h2>Welcome to RandomPlaylist!</h2>
+    <p> Want to be recommended a playlsit?</p>
 
 </section>
 
@@ -147,16 +202,101 @@
         dropdownContent.style.display = (dropdownContent.style.display === "block") ? "none" : "block";
     }
 
+    function toggleArtistDropdown() {
+    var artistDropdown = document.getElementById("artistOptions");
+    artistDropdown.style.display = (artistDropdown.style.display === "block") ? "none" : "block";
+    }
+
+
     function submitOptions() {
-            // Add your logic here to process the selected options
-         alert("Options submitted!");
+    var selectedOption = document.querySelector('input[name="recommendation"]:checked').value;
+    var optionValue;
+
+    function submitOptions() {
+    var selectedOption = document.querySelector('input[name="recommendation"]:checked').value;
+    var optionValue;
+
+    switch (selectedOption) {
+        case "danceability":
+            optionValue = document.getElementById("danceability").value;
+            break;
+        case "genre":
+            optionValue = document.getElementById("genre").value;
+            break;
+        case "artist":
+            optionValue = document.getElementById("artist").value;
+            break;
+        case "streams":
+            // You can add logic here to handle the streams option
+            optionValue = "Streams Option Selected";
+            break;
+        default:
+            optionValue = "Invalid Option";
+    }
+
+    alert("Selected Option: " + selectedOption + "\nOption Value: " + optionValue);
+}
+
+
+    switch (selectedOption) {
+        case "danceability":
+            optionValue = document.getElementById("danceability").value;
+            break;
+        case "genre":
+            optionValue = document.getElementById("genre").value;
+            break;
+        case "artist":
+            optionValue = document.getElementById("artist").value;
+            break;
+        case "streams":
+            // You can add logic here to handle the streams option
+            optionValue = "Streams Option Selected";
+            break;
+        default:
+            optionValue = "Invalid Option";
+    }
+
+    alert("Selected Option: " + selectedOption + "\nOption Value: " + optionValue);
+}
+
 
     function showSimilarSongs() {
         // Add your logic here to handle the "Similar Songs" button click
         alert("Displaying Similar Songs!");
-    }     
     }
- </script>
-    
+
+    // Toggle input options based on dropdown selection
+    document.getElementById("recommendationDropdown").addEventListener("click", function () {
+        var danceabilityOptions = document.getElementById("danceabilityOptions");
+        var genreOptions = document.getElementById("genreOptions");
+        var artistOptions = document.getElementById("artistOptions");
+
+        var dropdownContent = document.getElementById("optionsDropdown");
+
+        if (dropdownContent.style.display === "block") {
+            danceabilityOptions.style.display = "none";
+            genreOptions.style.display = "none";
+            artistOptions.style
+            display = "none";
+
+var selectedOption = document.querySelector('input[name="recommendation"]:checked').value;
+
+switch (selectedOption) {
+    case "danceability":
+        danceabilityOptions.style.display = "block";
+        break;
+    case "genre":
+        genreOptions.style.display = "block";
+        break;
+    case "artist":
+        artistOptions.style.display = "block";
+        break;
+    default:
+        break;
+}
+}
+});
+</script>
+
 </body>
 </html>
