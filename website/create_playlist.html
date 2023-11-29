@@ -9,3 +9,30 @@
     <p>Feel free to create your playlist here!</p>
 </body>
 </html>
+##################################################
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Playlist</title>
+</head>
+<body>
+    <h1>Welcome to Creating a Playlist</h1>
+    <p>Feel free to create your playlist here!</p>
+    <form action="/add_song" method="POST">
+        <label for="track_name">Song Name:</label>
+        <input type="text" id="track_name" name="track_name" placeholder="Enter song name" required><br><br>
+
+        <label for="artist_name">Artist Name:</label>
+        <input type="text" id="artist_name" name="artist_name" placeholder="Enter artist name" required><br><br>
+
+        <!-- Add more fields for other song attributes -->
+
+        <input type="submit" value="Add Song">
+    </form>
+
+    <form action="/get_recommendation" method="GET">
+        <input type="submit" value="Give me a Song">
+    </form>
+</body>
+</html>
