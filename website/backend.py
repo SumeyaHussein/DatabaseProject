@@ -49,21 +49,23 @@ def searchsongs():
     return render_template('searchsong.html') 
     
 
-#@app.route('/add_song', methods=['POST'])
-#def add_song():
-    try:
-        artist_name = request.form.get('artist_name')
-        track_name = request.form.get('track_name')
+@app.route('/add_song')
+def add_song():
+    song_name = request.args.get('songName')
 
-        # Execute SQL query to add the song to the playlist
-        query = f"INSERT INTO playlist (artist_name, track_name) VALUES ('{artist_name}', '{track_name}')"
-        mycursor.execute(query)
-        db.commit()
+    if song_name:
+        # Check if the song exists in the database
+        mycursor.execute("SELECT * FROM test WHERE track_name,  = %s", (song_name,))
+        existing_song = mycursor.fetchone()
 
-        return jsonify({'message': 'Song added successfully'})
+        if existing_song:
+            song_info = f"Song: {existing_song[1]}, Stream: {existing_song[2]}"
+        else:
+            song_info = f"Song '{song_name}' does not exist in the database."
 
-    except Exception as e:
-        return jsonify({'error': str(e)})
+        return jsonify({"message": song_info})
+
+    return jsonify({"message": "Invalid request"})  
 
 @app.route('/search')
 def search():
