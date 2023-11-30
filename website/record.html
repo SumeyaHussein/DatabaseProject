@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -50,222 +49,160 @@
             margin-top: 10px;
         }
 
-        .dropdown {
-            position: relative;
-            display: inline-block;
-        }
-
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #f9f9f9;
-            min-width: 160px;
-            box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-            z-index: 1;
-        }
-
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-
         .recorder-container {
             margin-top: 20px;
         }
     </style>
 </head>
-
 <body>
 
-    <header>
-        <h1>Record Sounds</h1>
-    </header>
+<header>
+    <h1>Record Sounds</h1>
+</header>
 
-    <section>
-        <button id="recordButton" onclick="showRecordingsPage()">Record</button>
+<section>
+    <button id="recordButton" onclick="showRecordPage()">Record</button>
 
-        <div class="dropdown">
-            <button id="speedButton">speed</button>
-            <div class="dropdown-content" id="speedDropdown">
-                <select id="speedSelect">
-                    <option value="1">Normal Speed</option>
-                    <option value="1.5">1.5x Speed</option>
-                    <option value="2">2x Speed</option>
-                </select>
-            </div>
-        </div>
+    <button id="startRecord">Start Recording</button>
+    <button id="stopRecord" disabled>Stop Recording</button>
+    <button id="playRecord" disabled>Play Recording</button>
+    <button id="keepRecord" disabled>Keep Recording</button>
 
-        <button id="startRecord">Start Recording</button>
-        <button id="stopRecord" disabled>Stop Recording</button>
-        <button id="playRecord" disabled>Play Recording</button>
-        <button id="keepRecord" disabled>Keep Recording</button>
+    <audio id="audioPlayer" controls></audio>
+     
+    <div class="record-page" id="recordPage" style="display: none;">
+        <h2>Record Page</h2>
+        <!-- Add your content for the Record page here -->
+    </div>
 
-        <audio id="audioPlayer" controls></audio>
+    <div class="recordings-section" id="recordingsSection" style="display: none;">
+        <h2>Kept Recordings</h2>
+        <ul id="recordingsList"></ul>
+    </div>
 
-        <div class="record-page" id="recordPage" style="display: none;">
-            <h2>Record Page</h2>
-            <!-- Add your content for the Record page here -->
-        </div>
+    <script>
+        let mediaRecorder;
+        let recordedChunks = [];
+        let keptRecordings = [];
 
-        <div class="recordings-section" id="recordingsSection" style="display: none;">
-            <h2>Kept Recordings</h2>
-            <ul id="recordingsList"></ul>
-        </div>
+        document.getElementById('startRecord').addEventListener('click', startRecording);
+        document.getElementById('stopRecord').addEventListener('click', stopRecording);
+        document.getElementById('playRecord').addEventListener('click', playRecording);
+        document.getElementById('keepRecord').addEventListener('click', keepRecording);
+        
+        const audioPlayer = document.getElementById('audioPlayer');
+        const recordingsSection = document.getElementById('recordingsSection');
+        const recordingsList = document.getElementById('recordingsList');
 
-        <script>
-            let mediaRecorder;
-            let recordedChunks = [];
-            let keptRecordings = [];
+        function startRecording() {
+            navigator.mediaDevices.getUserMedia({ audio: true })
+                .then(stream => {
+                    mediaRecorder = new MediaRecorder(stream);
 
-            document.getElementById('startRecord').addEventListener('click', startRecording);
-            document.getElementById('stopRecord').addEventListener('click', stopRecording);
-            document.getElementById('playRecord').addEventListener('click', playRecording);
-            document.getElementById('keepRecord').addEventListener('click', keepRecording);
-            document.getElementById('speedButton').addEventListener('click', toggleMute);
+                    mediaRecorder.ondataavailable = (e) => {
+                        if (e.data.size > 0) {
+                            recordedChunks.push(e.data);
+                        }
+                    };
 
-            const speedDropdown = document.getElementById('speedDropdown');
-            const speedSelect = document.getElementById('speedSelect');
-            const audioPlayer = document.getElementById('audioPlayer');
-            const recordingsSection = document.getElementById('recordingsSection');
-            const recordingsList = document.getElementById('recordingsList');
+                    mediaRecorder.onstop = () => {
+                        const audioBlob = new Blob(recordedChunks, { type: 'audio/wav' });
+                        recordedChunks = []; // Clear the recorded chunks for the next recording
+                        const audioUrl = URL.createObjectURL(audioBlob);
+                        audioPlayer.src = audioUrl;
+                        enableButtons(['playRecord', 'keepRecord']);
+                    };
 
-            function startRecording() {
-                navigator.mediaDevices.getUserMedia({ audio: true })
-                    .then(stream => {
-                        mediaRecorder = new MediaRecorder(stream);
+                    mediaRecorder.start();
+                    disableButtons(['startRecord']);
+                    enableButtons(['stopRecord']);
+                })
+                .catch(error => console.error('Error accessing microphone:', error));
+        }
 
-                        mediaRecorder.ondataavailable = (e) => {
-                            if (e.data.size > 0) {
-                                recordedChunks.push(e.data);
-                            }
-                        };
+        function stopRecording() {
+            mediaRecorder.stop();
+            disableButtons(['stopRecord']);
+            enableButtons(['playRecord', 'keepRecord']);
+        }
 
-                        mediaRecorder.onstop = () => {
-                            const audioBlob = new Blob(recordedChunks, { type: 'audio/wav' });
-                            recordedChunks = []; // Clear the recorded chunks for the next recording
-                            const audioUrl = URL.createObjectURL(audioBlob);
-                            audioPlayer.src = audioUrl;
-                            enableButtons(['playRecord', 'keepRecord']);
-                        };
+        function playRecording() {
+            audioPlayer.play();
+        }
 
-                        mediaRecorder.start();
-                        disableButtons(['startRecord']);
-                        enableButtons(['stopRecord']);
-                    })
-                    .catch(error => console.error('Error accessing microphone:', error));
-            }
+        function keepRecording() {
+            keptRecordings.push(audioPlayer.src);
+            addRecordingToList(audioPlayer.src);
+            disableButtons(['playRecord', 'keepRecord']);
+        }
 
-            function stopRecording() {
-                mediaRecorder.stop();
-                disableButtons(['stopRecord']);
-                enableButtons(['playRecord', 'keepRecord']);
-            }
+        function enableButtons(buttons) {
+            buttons.forEach(buttonId => {
+                document.getElementById(buttonId).disabled = false;
+            });
+        }
 
-            function playRecording() {
-                audioPlayer.playbackRate = parseFloat(speedSelect.value);
-                audioPlayer.play();
-            }
+        function disableButtons(buttons) {
+            buttons.forEach(buttonId => {
+                document.getElementById(buttonId).disabled = true;
+            });
+        }
 
-            function keepRecording() {
-                keptRecordings.push(audioPlayer.src);
-                addRecordingToList(audioPlayer.src);
-                updateRecordButton();
-                disableButtons(['playRecord', 'keepRecord']);
-            }
+        function addRecordingToList(url) {
+            const listItem = document.createElement('li');
+            listItem.classList.add('recording-item');
 
-            function toggleMute() {
-                const audioContext = new AudioContext();
-                const source = audioContext.createMediaElementSource(audioPlayer);
-                const gainNode = audioContext.createGain();
-                source.connect(gainNode);
-                gainNode.connect(audioContext.destination);
+            const playButton = document.createElement('button');
+            playButton.textContent = 'Play';
+            playButton.addEventListener('click', () => playRecordingByUrl(url));
 
-                if (audioPlayer.muted) {
-                    audioPlayer.muted = false;
-                    gainNode.gain.value = 1;
-                } else {
-                    audioPlayer.muted = true;
-                    gainNode.gain.value = 0;
-                }
-            }
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Delete';
+            deleteButton.addEventListener('click', () => deleteRecordingByUrl(url));
 
-            function enableButtons(buttons) {
-                buttons.forEach(buttonId => {
-                    document.getElementById(buttonId).disabled = false;
-                });
-            }
+            listItem.textContent = 'Recording';  // You can customize the name as needed
+            listItem.appendChild(playButton);
+            listItem.appendChild(deleteButton);
 
-            function disableButtons(buttons) {
-                buttons.forEach(buttonId => {
-                    document.getElementById(buttonId).disabled = true;
-                });
-            }
+            recordingsList.appendChild(listItem);
+        }
 
-            function addRecordingToList(url) {
-                const listItem = document.createElement('li');
-                listItem.classList.add('recording-item');
+        function playRecordingByUrl(url) {
+            audioPlayer.src = url;
+            audioPlayer.play();
+        }
 
-                const playButton = document.createElement('button');
-                playButton.textContent = 'Play';
-                playButton.addEventListener('click', () => playRecordingByUrl(url));
-
-                const deleteButton = document.createElement('button');
-                deleteButton.textContent = 'Delete';
-                deleteButton.addEventListener('click', () => deleteRecordingByUrl(url));
-
-                listItem.textContent = 'Recording'; // You can customize the name as needed
-                listItem.appendChild(playButton);
-                listItem.appendChild(deleteButton);
-                recordingsList.appendChild(listItem);
-            }
-
-            function playRecordingByUrl(url) {
-                audioPlayer.src = url;
-                audioPlayer.play();
-            }
-
-            function deleteRecordingByUrl(url) {
-                // Add logic to delete the recording (remove it from the list)
-                // For now, I'll just remove it from the list
-                const listItem = document.querySelector(`[data-url="${url}"]`);
-                if (listItem) {
-                    listItem.remove();
-                }
-
-                // Remove the recording from the keptRecordings array
-                const index = keptRecordings.indexOf(url);
-                if (index !== -1) {
-                    keptRecordings.splice(index, 1);
-                }
-            }
-
-            function showRecordingsPage() {
-                // Show the recordings section
-                document.getElementById('recordPage').style.display = 'none';
-                document.getElementById('recordingsSection').style.display = 'block';
-
-                // Enable recording buttons
-                enableButtons(['startRecord', 'stopRecord', 'playRecord', 'keepRecord']);
-
-                // Populate the recordings list
+        function deleteRecordingByUrl(url) {
+            // Remove the recording from the keptRecordings array
+            const index = keptRecordings.indexOf(url);
+            if (index !== -1) {
+                keptRecordings.splice(index, 1);
+                // Update the Recordings List
                 populateRecordingsList();
             }
+        }
 
-            function populateRecordingsList() {
-                // Clear existing recordings
-                recordingsList.innerHTML = '';
+        function showRecordPage() {
+            // Show the recordings section
+            document.getElementById('recordPage').style.display = 'none';
+            document.getElementById('recordingsSection').style.display = 'block';
 
-                // Add each kept recording to the list
-                keptRecordings.forEach(url => addRecordingToList(url));
-            }
+            // Enable recording buttons
+            enableButtons(['startRecord', 'stopRecord', 'playRecord', 'keepRecord']);
 
-            function updateRecordButton() {
-                const recordButton = document.getElementById('recordButton');
-                // You can customize the label as needed
-                recordButton.textContent = `Record (${keptRecordings.length} recordings)`;
-            }
-        </script>
-    </section>
+            // Populate the recordings list
+            populateRecordingsList();
+        }
+
+        function populateRecordingsList() {
+            // Clear existing recordings
+            recordingsList.innerHTML = '';
+
+            // Add each kept recording to the list
+            keptRecordings.forEach(url => addRecordingToList(url));
+        }
+    </script>
+</section>
 
 </body>
-
 </html>
