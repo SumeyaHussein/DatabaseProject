@@ -46,7 +46,18 @@ def likedsongs():
 
 @app.route('/searchsong')
 def searchsongs():
-    return render_template('searchsong.html')  
+    return render_template('searchsong.html') 
+
+@app.route('/search')
+def search():
+    song_name = request.args.get('songName')
+
+    # Perform a database query to check if the song exists
+    query = f"SELECT * FROM test WHERE track_name = '{song_name}'"
+    mycursor.execute(query)
+    result = mycursor.fetchall()
+
+    return jsonify(result)    
 
 #@app.route('/add_song', methods=['POST'])
 #def add_song():
