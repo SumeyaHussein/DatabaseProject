@@ -44,6 +44,11 @@ def own_song():
 #def create_playlist():
 def create_playlist():
     return render_template('create_playlist.html')  # You'll need to create this HTML file
+    
+@app.route('/likedsongs')
+def likedsongs():
+    return render_template('likedsongs.html')  # You'll need to create this HTML file
+    
 
 # Your existing SQL query handling route
 ###
