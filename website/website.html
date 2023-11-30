@@ -5,6 +5,7 @@
     <title>Welcome</title>
 </head>
 <body>
+    
     <!---<h1>Welcome to the Application</h1>
     
     <p>Please select an action:</p>
@@ -27,6 +28,18 @@
             text-align: center;
             color: white;
         }
+
+        .welcome-text {
+        position: absolute;
+        top: 50%;
+        left: 550px;
+        transform: translateY(-50%);
+        font-size: 22px;
+        font-weight: bold;
+        white-space: pre-line; /* Preserve line breaks */
+        color: #1DB954; /* Ensure the text color is white */
+
+    }
 
         nav {
             float: left;
@@ -167,10 +180,22 @@
 
 <header>
     <h1>RandomPlaylist</h1>
+    <div class="welcome-text">Here is a place you can create the best playlist. 
+        To create a playlist go to Create a Playlist page, Want to search up a song? 
+        vist the  search song page. 
+        Want to record a podcast or Song vist -> record page.
+        Want to get a song recommendation or add a song to your playlist -> 
+        vist the playlist Page
+        Want to see all your liked songs vist the -> 
+        liked songs Page
+       </div>
+
 </header>
 
+
 <nav>
-    <a href="index.html">Home</a>
+    <!--<a href="index.html">Home</a>
+    -->
     <a href="create_playlist">Create a Playlist</a>
     <a href="searchsong">Search song</a>
     <a href="record">Record</a>
@@ -193,14 +218,15 @@
     </div>
     <!-- End of dropdown -->
 
-    <!-- Enter button for playlist recommendations -->
+    <!-- Enter button for playlist recommendations 
     <button class="enter-button" onclick="submitOptions()">Enter</button>
 
-    <!-- Similar Songs button -->
+    Similar Songs button 
     <button class="similar-songs-button" onclick="showSimilarSongs()">Search up songs</button>
      
-    <!--<button class="playlist" onclick="create_playlist()">create playlist</button>
-    -->
+    <button class="playlist" onclick="create_playlist()">create playlist</button>
+    
+-->
 
 
 </section>
@@ -218,54 +244,7 @@
 
   
 
-   /* function getOptionValue(optionId) {
-        var optionElement = document.getElementById(optionId);
-        return optionElement ? optionElement.value : "";
-    }
 
-    function showSimilarSongs() {
-        // Add your logic here to handle the "Similar Songs" button click
-        alert("Displaying Similar Songs!");
-    }
-
-    // Toggle input options based on dropdown selection
-    document.getElementById("recommendationDropdown").addEventListener("click", function () {
-        var danceabilityOptions = document.getElementById("danceabilityOptions");
-        var genreOptions = document.getElementById("genreOptions");
-        var artistOptions = document.getElementById("artistOptions");
-
-        var dropdownContent = document.getElementById("optionsDropdown");
-
-        if (dropdownContent.style.display === "block") {
-            danceabilityOptions.style.display = "none";
-            genreOptions.style.display = "none";
-            artistOptions.style.display = "none";
-
-            var selectedOption = document.querySelector('input[name="recommendation"]:checked').value;
-
-        
-        }
-    });*/
-
-       // function runSQLQueries() {
-            // Redirect to the page to run SQL queries
-         //   window.location.href = '/testWeb';
-        //}
-
-        //function createPlaylist() {
-            // Redirect to the page to create a playlist
-          //  window.location.href = '/create_playlist';
-        //}
-
-        //function record(){
-          // window.location.href = '/record';
-
-        //}
-
-        //function searchsong(){
-          // window.location.href = '/search-song';
-
-        //} 
     </script>
 </body>
 </html>
