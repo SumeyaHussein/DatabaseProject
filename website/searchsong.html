@@ -78,7 +78,8 @@
             <button type="button" onclick="searchSong()">Search</button>
         </form>
 
-        <div id="result"></div>
+        <div id="result"></div>  
+
 
         <script>
             function searchSong() {
@@ -94,7 +95,7 @@
                     });
             }
 
-            function displaySearchResult(result) {
+            /*function displaySearchResult(result) {
                 const resultDiv = document.getElementById('result');
                 
                 if (result.length > 0) {
@@ -103,6 +104,28 @@
                     resultDiv.innerHTML = '<p>Song not found.</p>';
                 }
             }
+           */ 
+           function displaySearchResult(result) {
+    const resultDiv = document.getElementById('result');
+    const additionalInfoDiv = document.getElementById('additionalInfo');
+
+    if ('error' in result) {
+        resultDiv.innerHTML = `<p>${result.error}</p>`;
+        additionalInfoDiv.innerHTML = '';  // Clear additional info
+    } else {
+        resultDiv.innerHTML = `<p>Song found 
+            <br> the artist for this song is: ${result[1]} 
+            <br> Artist count: ${result[2]}
+            <br>Released Year: ${result[3]}
+            <br>Released Month: ${result[4]}
+            <br>Released Day: ${result[5]}
+            <br>Streams: ${result[8]}
+            </p>`
+        
+        
+    }
+}
+
         </script>
     </main>
 </body>
