@@ -5,21 +5,224 @@
     <title>Welcome</title>
 </head>
 <body>
-    <h1>Welcome to the Application</h1>
-    <p>Please select an action:</p>
-    <button onclick="runSQLQueries()">Run SQL Queries</button>
-    <button onclick="createPlaylist()">Create Playlist</button>
+    
 
-    <script>
-        function runSQLQueries() {
-            // Redirect to the page to run SQL queries
-            window.location.href = '/testWeb';
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
         }
 
-        function createPlaylist() {
-            // Redirect to the page to create a playlist, this whole page isnt needed
-            window.location.href = '/playlist';
+        header {
+            background-color: #1DB954;
+            padding: 10px;
+            text-align: center;
+            color: white;
         }
+
+        .welcome-text {
+        position: absolute;
+        top: 50%;
+        left: 550px;
+        transform: translateY(-50%);
+        font-size: 22px;
+        font-weight: bold;
+        white-space: pre-line; /* Preserve line breaks */
+        color: #1DB954; /* Ensure the text color is white */
+
+    }
+
+        nav {
+            float: left;
+            width: 20%;
+            height: 100vh;
+            background-color: #333;
+            padding-top: 20px;
+        }
+
+        nav a {
+            display: block;
+            color: white;
+            padding: 10px;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        nav a:hover {
+            background-color: #555;
+        }
+
+        section {
+            float: left;
+            width: 80%;
+            padding: 20px;
+        }
+
+        .dropdown {
+            position: absolute;
+            top: 150px;
+            left: 300px;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .enter-button {
+            position: absolute;
+            top: 150px;
+            left: 520px;
+            background-color: rgb(10, 114, 31);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .dropdown button, .similar-songs-button {
+            background-color: black;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .similar-songs-button {
+            position: absolute;
+            top: 190px;
+            left: 280px;
+            background-color: black;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            margin-left: 20px;
+        }
+
+        .enter-button:hover, .dropdown button:hover, .similar-songs-button:hover {
+            background-color: #000000;
+        }
+
+        .input-options {
+            margin-top: 10px;
+        }
+
+        .input-options label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        .input-options input, .input-options select {
+            margin-top: 5px;
+        }
+
+        .input-options input[type="radio"] {
+            margin-top: 5px;
+        }
+
+        #artistDropdown {
+        position: absolute;
+        top: 150px;
+        left: 360px; /* Adjust the left position as needed */
+        display: inline-block;
+       }
+       .input-options {
+    margin-top: 10px;
+}
+
+.input-options label {
+    display: block;
+    margin-top: 10px;
+}
+
+.input-options input,
+.input-options select {
+    margin-top: 5px;
+}
+
+.input-options label,
+.input-options input,
+.input-options select {
+    display: inline-block;
+}
+
+#recommendationTypeOptions {
+    margin-top: 10px;
+}
+
+.dropdown-content {
+    text-align: left; /* Add this to align the content to the left */
+}
+
+
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>RandomPlaylist</h1>
+    <div class="welcome-text">Here is a place you can create the best playlist. 
+        To create a playlist go to Create a Playlist page, Want to search up a song? 
+        vist the  search song page. 
+        Want to record a podcast or Song vist -> record page.
+        Want to get a song recommendation or add a song to your playlist -> 
+        vist the playlist Page
+        Want to see all your liked songs vist the -> 
+        liked songs Page
+       </div>
+
+</header>
+
+
+<nav>
+    <!--<a href="index.html">Home</a>
+    -->
+    <a href="create_playlist">Create a Playlist</a>
+    <a href="searchsong">Search song</a>
+    <a href="record">Record</a>
+    <a href="playlist">playlist</a>
+    <a href="likedsongs">Liked songs</a>
+    <a href="testWeb">SQL test</a>
+
+
+</nav>
+
+<section>
+    
+
+           
+        </div>
+    </div>
+
+
+
+</section>
+
+<script>
+    function toggleDropdown() {
+        var dropdownContent = document.getElementById("optionsDropdown");
+        dropdownContent.style.display = (dropdownContent.style.display === "block") ? "none" : "block";
+    }
+
+    function toggleArtistDropdown() {
+        var artistDropdown = document.getElementById("artistOptions");
+        artistDropdown.style.display = (artistDropdown.style.display === "block") ? "none" : "block";
+    }
+
+  
+
+
     </script>
 </body>
 </html>
