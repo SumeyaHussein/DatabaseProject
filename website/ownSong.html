@@ -12,8 +12,16 @@
             padding: 20px;
         }
 
+        header {
+            background-color: #1DB954;
+            padding: 10px;
+            text-align: center;
+            color: white;
+            margin-bottom: 20px;
+        }
+
         h1 {
-            color: #1DB954;
+            margin: 0;
         }
 
         p {
@@ -57,7 +65,10 @@
     </style>
 </head>
 <body>
-    <h1>Welcome to Creating a Playlist</h1>
+    <header>
+        <h1>Welcome to Creating a Playlist</h1>
+    </header>
+
     <p>Add your own song</p>
 
     <form action="/add_song" method="POST">
@@ -71,3 +82,4 @@
     </form>
 </body>
 </html>
+
