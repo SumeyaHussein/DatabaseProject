@@ -6,80 +6,117 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            color: #333;
+            background-color: #000;
+            color: #fff;
             margin: 0;
             padding: 20px;
-        }
-
-        header {
-            background-color: #1DB954;
-            padding: 10px;
-            text-align: center;
-            color: white;
-            margin-bottom: 20px;
         }
 
         h1 {
-            margin: 0;
+            color: #1DB954;
         }
 
-        p {
-            color: #333;
-            margin-bottom: 20px;
-        }
-
-        form {
-            max-width: 400px;
-            margin-top: 20px;
-            background-color: #fff;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: #333;
-        }
-
-        input {
-            padding: 10px;
-            width: calc(100% - 20px);
+        p, label {
+            color: #fff;
             margin-bottom: 10px;
-            box-sizing: border-box;
-            border: 1px solid #cccccc;
+        }
+
+        input[type="text"],
+        input[type="submit"] {
+            padding: 8px;
+            margin-bottom: 10px;
+            width: 200px; /* Adjust width as needed */
         }
 
         input[type="submit"] {
-            background-color: black;
-            color: white;
-            padding: 10px 20px;
+            background-color: #1DB954;
+            color: #fff;
             border: none;
             cursor: pointer;
         }
 
         input[type="submit"]:hover {
-            background-color: #333;
+            background-color: #000;
+        }
+
+        #playlistContents {
+            margin-top: 20px;
+            color: #1DB954; /* Adjust text color for playlist contents */
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Welcome to Creating a Playlist</h1>
-    </header>
-
+    <h1>Welcome to Creating a Playlist</h1>
     <p>Add your own song</p>
-
-    <form action="/add_song" method="POST">
+    
+    <form id="addSongForm" action="/add_song" method="POST">
         <label for="track_name">Song Name:</label>
         <input type="text" id="track_name" name="track_name" placeholder="Enter song name" required><br><br>
 
         <label for="artist_name">Artist Name:</label>
         <input type="text" id="artist_name" name="artist_name" placeholder="Enter artist name" required><br><br>
-
+        
         <input type="submit" value="Add Song">
     </form>
+
+    <h2>Delete Song</h2>
+    <form id="deleteSongForm" action="/delete_song" method="POST">
+        <label for="delete_track_name">Song Name:</label>
+        <input type="text" id="delete_track_name" name="delete_track_name" placeholder="Enter song name to delete" required><br><br>
+
+        <label for="delete_artist_name">Artist Name:</label>
+        <input type="text" id="delete_artist_name" name="delete_artist_name" placeholder="Enter artist name to delete" required><br><br>
+        
+        <input type="submit" value="Delete Song">
+    <!--</form>
+
+    <div id="playlistContents">
+       
+    </div>
+
+    <script>
+        // Fetch and display the playlist contents after the page loads
+        window.onload = () => {
+            fetch('/get_playlist')
+                .then(response => response.json())
+                .then(data => {
+                    // Display playlist contents in the #playlistContents div
+                    // You can format it as per your requirement
+                    document.getElementById('playlistContents').innerHTML = JSON.stringify(data);
+                })
+                .catch(error => console.error('Error:', error));
+        };
+    </script>
+    -->
+    <table id="playlistTable">
+        <thead>
+            <tr>
+                <th>Artist Name</th>
+                <th>Song Name</th>
+            </tr>
+        </thead>
+        <tbody id="playlistContents">
+            <!-- Display the contents of the playlist here -->
+        </tbody>
+    </table>
+
+    <script>
+        // Fetch and display the playlist contents after the page loads
+        window.onload = () => {
+            fetch('/get_playlist')
+                .then(response => response.json())
+                .then(data => {
+                    // Display playlist contents in the #playlistContents tbody as a table
+                    const playlistTable = document.getElementById('playlistContents');
+                    data.forEach(song => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `<td>${song.artist_name}</td><td>${song.track_name}</td>`;
+                        playlistTable.appendChild(row);
+                    });
+                })
+                .catch(error => console.error('Error:', error));
+        };
+    </script>
 </body>
 </html>
 
