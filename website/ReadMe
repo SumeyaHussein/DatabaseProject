@@ -30,3 +30,16 @@ templates must have
 -testWeb.html
 -welcomepage.html
 
+
+
+to run have the following-create_playlist.html
+-create_playlist.html
+-ownSong.html
+-playlist.html
+-testWeb.html
+-searchsong.html
+-welcomepage.html
+-likedsong.html (ignore for now)
+- record.html
+
+
