@@ -7,18 +7,7 @@
 <body>
     <h1>Welcome to Creating a Playlist</h1>
     <p>Feel free to create your playlist here!</p>
-</body>
-</html>
-##################################################
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Create Playlist</title>
-</head>
-<body>
-    <h1>Welcome to Creating a Playlist</h1>
-    <p>Feel free to create your playlist here!</p>
+    <!--
     <form action="/add_song" method="POST">
         <label for="track_name">Song Name:</label>
         <input type="text" id="track_name" name="track_name" placeholder="Enter song name" required><br><br>
@@ -26,13 +15,51 @@
         <label for="artist_name">Artist Name:</label>
         <input type="text" id="artist_name" name="artist_name" placeholder="Enter artist name" required><br><br>
 
-        <!-- Add more fields for other song attributes -->
+        
 
         <input type="submit" value="Add Song">
-    </form>
+    --> 
+    <!--</form>
 
     <form action="/get_recommendation" method="GET">
         <input type="submit" value="Give me a Song">
+
+    </form> -->
+    <form action="/get_recommendation" method="POST">
+        
+    
+        <label for="danceability">Danceability (0-100):</label>
+        <input type="number" id="danceability" name="danceability" step="0.01" min="0" max="100"><br><br>
+    
+        <!-- Include other input fields for different song attributes -->
+        <label for="valance">Valance (0-100):</label>
+        <input type="number" id="danceability" name="valance" step="0.01" min="0" max="100"><br><br>
+
+        <label for="enegry">Enegry (0-100):</label>
+        <input type="number" id="danceability" name="danceability" step="0.01" min="0" max="100"><br><br>
+
+        <label for="acousticness">Acousticness (0-100):</label>
+        <input type="number" id="acousticness" name="acousticness" step="0.01" min="0" max="100"><br><br>
+
+        
+        <label for="instrumentalness">instrumentalness (0-100):</label>
+        <input type="number" id="instrumentalness" name="instrumentalness" step="0.01" min="0" max="100"><br><br>
+
+        <label for="liveness">liveliness(0-100):</label>
+        <input type="number" id="liveness" name="liveness" step="0.01" min="0" max="100"><br><br>
+
+
+
+            <input type="submit" value="Get Recommendations">
     </form>
+    <div id="recommendations">
+        <h2>Recommendations</h2>
+        <ul>
+            {% for recommendation in recommendations %}
+                <li>{{ recommendation.track_name }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
 </body>
 </html>

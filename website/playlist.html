@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome</title>
+</head>
+<body>
+    <h1>Welcome to create a playlist</h1>
+    <p>Please select an action:</p>
+    <button onclick="givemeasong()">Give me a song</button>
+    <button onclick="addmyown()">Add my own</button>
+
+    <script>
+        function givemeasong() {
+            // Redirect to the page to run SQL queries
+            window.location.href = '/create_playlist';
+        }
+
+        function addmyown() {
+            // Redirect to the page to create a playlist
+            window.location.href = '/ownSong';
+        }
+    </script>
+</body>
+</html>
