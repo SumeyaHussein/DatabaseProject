@@ -1,8 +1,10 @@
+<!-- searchsong.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Welcome</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Song Search</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -58,19 +60,55 @@
         button:hover {
             background-color: #333333;
         }
+
+        #result {
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
-
     <header>
-        <h1>RandomPlaylist</h1>
+        <h1>Song Search</h1>
     </header>
+    
     <main>
-        <form action="/search" method="get">
-            <label for="searchQuery">Search Songs:</label>
-            <input type="text" id="searchQuery" name="searchQuery" placeholder="Type your search...">
-            <button type="submit">Search</button>
+        <form id="searchForm">
+            <label for="songName">Enter Song Name:</label>
+            <input type="text" id="songName" name="songName" required>
+            <button type="button" onclick="searchSong()">Search</button>
         </form>
+
+        <div id="result"></div>
+
+        <script>
+            function searchSong() {
+                const songName = document.getElementById('songName').value;
+
+                fetch(`/search?songName=${encodeURIComponent(songName)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        displaySearchResult(data);
+                    })
+                    .catch(error => {
+                        console.error('Error during search:', error);
+                    });
+            }
+
+            function displaySearchResult(result) {
+                const resultDiv = document.getElementById('result');
+                
+                if (result.length > 0) {
+                    resultDiv.innerHTML = `<p>Song found, the artist for this song is: ${result[0][1]}</p>`;
+                } else {
+                    resultDiv.innerHTML = '<p>Song not found.</p>';
+                }
+            }
+        </script>
     </main>
 </body>
 </html>
+
+
+
+
+
