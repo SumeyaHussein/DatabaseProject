@@ -70,7 +70,7 @@ def search():
     song_name = request.args.get('songName')
 
     # Perform a database query to check if the song exists
-    query = f"SELECT * FROM test WHERE track_name = '{song_name}'"
+    query = f"SELECT * FROM artists WHERE track_name = '{song_name}'"
     mycursor.execute(query)
     result = mycursor.fetchall()
 
