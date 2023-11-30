@@ -28,26 +28,32 @@ def testWeb():
 # Route for creating a playlist
 #@app.route('/create_playlist')
 #def create_playlist():
-#    return render_template('create_playlist.html')  # You'll need to create this HTML file
+#    return render_template('create_playlist.html')  
 
 @app.route('/playlist')
 #def create_playlist():
 def playlist():
-    return render_template('playlist.html')  # You'll need to create this HTML file
+    return render_template('playlist.html')  
 
 @app.route('/ownSong')
 #def create_playlist():
 def own_song():
-    return render_template('ownSong.html')  # You'll need to create this HTML file
+    return render_template('ownSong.html')  
 
 @app.route('/create_playlist')
 #def create_playlist():
 def create_playlist():
-    return render_template('create_playlist.html')  # You'll need to create this HTML file
+    return render_template('create_playlist.html')  
     
 @app.route('/likedsongs')
 def likedsongs():
-    return render_template('likedsongs.html')  # You'll need to create this HTML file
+    return render_template('likedsongs.html')  
+
+@app.route('/searchsong')
+def searchsongs():
+    return render_template('searchsong.html')  
+
+
     
 
 # Your existing SQL query handling route
