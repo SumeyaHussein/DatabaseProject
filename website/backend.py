@@ -71,13 +71,16 @@ def add_song():
 def search():
     song_name = request.args.get('songName')
 
-    # Perform a database query to check if the song exists
-    query = f"SELECT * FROM artists WHERE track_name = '{song_name}'"
+    query = f"SELECT * FROM test WHERE track_name = '{song_name}'"
     mycursor.execute(query)
-    result = mycursor.fetchall()
+    result = mycursor.fetchone()
 
-    return jsonify(result)
+    print("Result from database:", result)  # Add this line for debugging
 
+    if result:
+        return jsonify(result)
+    else:
+        return jsonify({"error": "Song not found"}), 404
 
 
 @app.route('/delete_song', methods=['POST'])
