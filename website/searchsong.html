@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #1DB954;
+            padding: 10px;
+            text-align: center;
+            color: white;
+        }
+
+        main {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333333;
+        }
+
+        input {
+            padding: 10px;
+            width: calc(100% - 20px);
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            border: 1px solid #cccccc;
+        }
+
+        button {
+            background-color: black;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #333333;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>RandomPlaylist</h1>
+    </header>
+    <main>
+        <form action="/search" method="get">
+            <label for="searchQuery">Search Songs:</label>
+            <input type="text" id="searchQuery" name="searchQuery" placeholder="Type your search...">
+            <button type="submit">Search</button>
+        </form>
+    </main>
+</body>
+</html>
