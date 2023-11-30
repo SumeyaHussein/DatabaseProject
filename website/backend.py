@@ -4,8 +4,7 @@ from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
-#empdata = pd.read_csv('C:\Users\Thinking1\vsc_workspace\spotify-2023.csv', index_col=False, delimiter = ',')
-#empdata.head()
+
 
 db = mysql.connector.connect(
     host = "localhost",
@@ -18,17 +17,13 @@ mycursor = db.cursor()
 
 @app.route('/')
 def welcome():
-    return render_template('welcomepage.html')
+    return render_template('website.html')
 
 # Route for running SQL queries
 @app.route('/testWeb')
 def testWeb():
-    return render_template('testWeb.html')  # You'll need to create this HTML file
+    return render_template('testWeb.html')  # You'll need to create this HTML fil
 
-# Route for creating a playlist
-#@app.route('/create_playlist')
-#def create_playlist():
-#    return render_template('create_playlist.html')  
 
 @app.route('/playlist')
 #def create_playlist():
@@ -53,8 +48,58 @@ def likedsongs():
 def searchsongs():
     return render_template('searchsong.html')  
 
+#@app.route('/add_song', methods=['POST'])
+#def add_song():
+    try:
+        artist_name = request.form.get('artist_name')
+        track_name = request.form.get('track_name')
 
-    
+        # Execute SQL query to add the song to the playlist
+        query = f"INSERT INTO playlist (artist_name, track_name) VALUES ('{artist_name}', '{track_name}')"
+        mycursor.execute(query)
+        db.commit()
+
+        return jsonify({'message': 'Song added successfully'})
+
+    except Exception as e:
+        return jsonify({'error': str(e)})
+
+
+
+@app.route('/delete_song', methods=['POST'])
+def delete_song():
+    try:
+        delete_artist_name = request.form.get('delete_artist_name')
+        delete_track_name = request.form.get('delete_track_name')
+
+        # Execute SQL query to delete the song from the playlist
+        query = f"DELETE FROM playlist WHERE artist_name = '{delete_artist_name}' AND track_name = '{delete_track_name}'"
+        mycursor.execute(query)
+        db.commit()
+
+        #return jsonify({'message': 'Song deleted successfully'})
+        return render_template('ownSong.html')
+
+    except Exception as e:
+        return jsonify({'error': str(e)})
+
+@app.route('/get_playlist', methods=['GET'])
+def get_playlist():
+    try:
+        # Fetch the playlist contents
+        query = "SELECT * FROM playlist"
+        mycursor.execute(query)
+        result = mycursor.fetchall()
+
+        # Format the playlist contents and send to the frontend
+        playlist = [{'artist_name': row[0], 'track_name': row[1]} for row in result]
+
+        return jsonify(playlist)
+
+
+    except Exception as e:
+        return jsonify({'error': str(e)})
+
 
 # Your existing SQL query handling route
 ###
@@ -83,23 +128,7 @@ def add_song():
     except Exception as e:
         return jsonify({'error': str(e)})
 
-# Route to get a song recommendation
-#@app.route('/get_recommendation', methods=['GET'])
-#def get_recommendation():
- #   try:
-        # Your logic to generate a song recommendation goes here
-        # This could involve SQL queries or other methods to fetch a recommended song
 
-        # For example, a simple SQL query to get a random song from your database
-  #      query = "SELECT track_name FROM song ORDER BY RAND() LIMIT 1" #modify so that based on the user liking
-        #of each feild it reflects a playlist from that
-   #     mycursor.execute(query)
-    #    result = mycursor.fetchone()
-
-        # You can process the recommendation and pass it to the frontend
-     #   recommendation = result[0] if result else None
-
-      #  return jsonify({'recommendation': recommendation})
 @app.route('/get_recommendation', methods=['POST'])
 def get_recommendation():
     try:
