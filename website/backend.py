@@ -4,7 +4,8 @@ from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
-
+#empdata = pd.read_csv('C:\Users\Thinking1\vsc_workspace\spotify-2023.csv', index_col=False, delimiter = ',')
+#empdata.head()
 
 db = mysql.connector.connect(
     host = "localhost",
@@ -22,7 +23,12 @@ def welcome():
 # Route for running SQL queries
 @app.route('/testWeb')
 def testWeb():
-    return render_template('testWeb.html')  # You'll need to create this HTML fil
+    return render_template('testWeb.html')  # You'll need to create this HTML file
+
+# Route for creating a playlist
+@app.route('/record')
+def showRecordPage():
+    return render_template('record.html')  
 
 
 @app.route('/playlist')
@@ -46,32 +52,14 @@ def likedsongs():
 
 @app.route('/searchsong')
 def searchsongs():
-    return render_template('searchsong.html') 
-    
+    return render_template('searchsong.html')  
 
-@app.route('/add_song')
-def add_song():
-    song_name = request.args.get('songName')
-
-    if song_name:
-        # Check if the song exists in the database
-        mycursor.execute("SELECT * FROM test WHERE track_name,  = %s", (song_name,))
-        existing_song = mycursor.fetchone()
-
-        if existing_song:
-            song_info = f"Song: {existing_song[1]}, Stream: {existing_song[2]}"
-        else:
-            song_info = f"Song '{song_name}' does not exist in the database."
-
-        return jsonify({"message": song_info})
-
-    return jsonify({"message": "Invalid request"})  
 
 @app.route('/search')
 def search():
     song_name = request.args.get('songName')
 
-    query = f"SELECT * FROM test WHERE track_name = '{song_name}'"
+    query = f"SELECT * FROM spotify2023 WHERE track_name = '{song_name}'"
     mycursor.execute(query)
     result = mycursor.fetchone()
 
@@ -82,6 +70,23 @@ def search():
     else:
         return jsonify({"error": "Song not found"}), 404
 
+
+@app.route('/update_streams', methods=['POST'])
+def update_streams():
+    try:
+        data = request.json  # Retrieve data from the JSON request
+        track_name = data.get('track_name')
+        new_streams = data.get('streams')
+
+        # Check if the track exists before inserting
+        query_check = f"SELECT * FROM song WHERE track_name = '{track_name}'"
+        mycursor.execute(query_check)
+        result = mycursor.fetchall()
+    
+        return render_template('searchsong.html')
+
+    except Exception as e:
+        return jsonify({'error': str(e)})
 
 @app.route('/delete_song', methods=['POST'])
 def delete_song():
@@ -118,8 +123,10 @@ def get_playlist():
         return jsonify({'error': str(e)})
 
 
-# Your existing SQL query handling route
-###
+
+
+
+
 @app.route('/add_song', methods=['POST'])
 def add_song():
     try:
@@ -131,20 +138,11 @@ def add_song():
         query = f"INSERT INTO playlist (artist_name, track_name) VALUES ('{artist_name}', '{track_name}')"
         mycursor.execute(query)
         db.commit()  # Commit chan
-        # Receive song details from the request
-        #track_name = request.form.get('artist_name track_name')
-        # Get other song attributes similarly
-
-        # Execute SQL query to add the song to the playlist
-        #query = f"INSERT INTO playlist (artist_name, track_name) VALUES ('{track_name}')"
-        #mycursor.execute(query)
-        #db.commit()  # Commit changes to the database
-
+     
         return render_template('ownSong.html')
 
     except Exception as e:
         return jsonify({'error': str(e)})
-
 
 @app.route('/get_recommendation', methods=['POST'])
 def get_recommendation():
@@ -191,8 +189,6 @@ def get_recommendation():
     
     except Exception as e:
         return jsonify({'error': str(e)})
-
-
 
 
 @app.route('/query', methods=['POST'])
