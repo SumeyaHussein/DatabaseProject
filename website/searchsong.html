@@ -1,4 +1,3 @@
-<!-- searchsong.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -70,66 +69,108 @@
     <header>
         <h1>Song Search</h1>
     </header>
-    
+
     <main>
+        <!-- Existing search form -->
         <form id="searchForm">
             <label for="songName">Enter Song Name:</label>
-            <input type="text" id="songName" name="songName" required>
+            <input type="text" id="songName" name="songName" required >
             <button type="button" onclick="searchSong()">Search</button>
         </form>
 
-        <div id="result"></div>  
+        <div id="result"></div>
 
+        <!-- New form to update song streams -->
+        <form id="updateForm">
+            <label for="songName">Enter a song to update its streams:</label>
+            <input type="text" id="songName" name="songName" required>
+            <label for="newStreams">Enter New Streams Count:</label>
+            <input type="number" id="newStreams" name="newStreams" required>
+            <button type="button" onclick="updateStreams()">Update Streams</button>
+        </form>
+
+        <!-- Updated result display div -->
+        <div id="songInfo"></div>
 
         <script>
-            function searchSong() {
-                const songName = document.getElementById('songName').value;
-
-                fetch(`/search?songName=${encodeURIComponent(songName)}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        displaySearchResult(data);
-                    })
-                    .catch(error => {
-                        console.error('Error during search:', error);
-                    });
-            }
-
-            /*function displaySearchResult(result) {
-                const resultDiv = document.getElementById('result');
-                
-                if (result.length > 0) {
-                    resultDiv.innerHTML = `<p>Song found, the artist for this song is: ${result[0][1]}</p>`;
-                } else {
-                    resultDiv.innerHTML = '<p>Song not found.</p>';
+                function searchSong() {
+                    const songName = document.getElementById('songName').value;
+    
+                    fetch(`/search?songName=${encodeURIComponent(songName)}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            displaySearchResult(data);
+                        })
+                        .catch(error => {
+                            console.error('Error during search:', error);
+                        });
                 }
+    
+                function displaySearchResult(result) {
+                    const resultDiv = document.getElementById('result');
+    
+                    if (result.length > 0) {
+                        resultDiv.innerHTML = `<p>Song found, the artist for this song is: ${result[0][0]}</p>`;
+                        fetchSongInfo(result[0][1]); // Assuming the artist name is retrieved
+                    } else {
+                        resultDiv.innerHTML = '<p>Song not found.</p>';
+                    }
+                }
+                function updateStreams() {
+            const songName = document.getElementById('songToUpdate').value; // Updated ID
+            const newStreams = document.getElementById('newStreams').value;
+    
+            fetch('/update_streams', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ track_name: songName, streams: newStreams })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data.message);
+                displayUpdatedSongInfo(data.song_info); // Function to display updated info
+            })
+            .catch(error => {
+                console.error('Error updating streams:', error);
+                // Handle errors or display an error message
+            });
+        }
+    
+        function displayUpdatedSongInfo(songInfo) {
+            const songInfoDiv = document.getElementById('songInfo');
+            songInfoDiv.innerHTML = `<p>Updated Track Name: ${songInfo[0].track_name}, Updated Streams: ${songInfo[0].streams}</p>`;
+    
+                
+        }
+        function displaySearchResult(result) {
+        const resultDiv = document.getElementById('result');
+        const additionalInfoDiv = document.getElementById('additionalInfo');
+    
+        if ('error' in result) {
+            resultDiv.innerHTML = `<p>${result.error}</p>`;
+            additionalInfoDiv.innerHTML = '';  // Clear additional info
+        } else {
+            resultDiv.innerHTML = `<p>Song found 
+                <br> the artist for this song is: ${result[1]} 
+                <br> Artist count: ${result[2]}
+                <br>Released Year: ${result[3]}
+                <br>Released Month: ${result[4]}
+                <br>Released Day: ${result[5]}
+                <br>Streams: ${result[8]}
+                </p>`
+            
+            
             }
-           */ 
-           function displaySearchResult(result) {
-    const resultDiv = document.getElementById('result');
-    const additionalInfoDiv = document.getElementById('additionalInfo');
-
-    if ('error' in result) {
-        resultDiv.innerHTML = `<p>${result.error}</p>`;
-        additionalInfoDiv.innerHTML = '';  // Clear additional info
-    } else {
-        resultDiv.innerHTML = `<p>Song found 
-            <br> the artist for this song is: ${result[1]} 
-            <br> Artist count: ${result[2]}
-            <br>Released Year: ${result[3]}
-            <br>Released Month: ${result[4]}
-            <br>Released Day: ${result[5]}
-            <br>Streams: ${result[8]}
-            </p>`
-        
-        
-    }
-}
-
+        }
+            
         </script>
     </main>
 </body>
 </html>
+
+
 
 
 
