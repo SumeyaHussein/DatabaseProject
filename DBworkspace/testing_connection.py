@@ -5,13 +5,10 @@ df = pd.read_csv('spotify-2023.csv', encoding='ISO-8859-1')
 df.columns = df.columns.str.strip()
 connection = sqlite3.connect('spotify-2023.db')
 
-# Establish a connection to your database
-#connection = sqlite3.connect("spotify-2023.db")
+
 cursor = connection.cursor()
 
-# Read SQL command from the file
-#with open('create_table.sql', 'r') as sql_file:
-#    sql_command = sql_file.read()
+
 sql_command = "CREATE TABLE Artist (artist_name VARCHAR(255) PRIMARY KEY,track_name VARCHAR(255));"
 # Execute the SQL command
 cursor.execute(sql_command)
@@ -26,4 +23,3 @@ for row in table_contents:
     print(row)  # Display each row of the table
 
 connection.close()
-#df.to_sql()
